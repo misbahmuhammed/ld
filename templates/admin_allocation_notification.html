@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Allocation Notification</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        /* Add your CSS styles here */
+        .notification-container {
+            width: 70%;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .notification-message {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .home-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="notification-container">
+        <p class="notification-message">Course allocation successful!</p>
+        <p>Your selected course has been successfully allocated to the specified batch.</p>
+    </div>
+
+    <div class="home-button">
+        <a href="{{ url_for('dashboard') }}">Back to Home</a>
+    </div>
+</body>
+</html>

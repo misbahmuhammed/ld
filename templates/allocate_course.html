@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Allocate Course</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+
+        /* Add your CSS styles here */
+        .form-container {
+            width: 70%;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+        }
+        .home-button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Allocate Course</h1>
+
+    <div class="form-container">
+        <form method="POST">
+            <div class="form-group">
+                <label for="batch">Batch:</label>
+                <select name="batch" id="batch" required>
+                    <option value="">Select Batch</option>
+                    {% for batch in batch_names %}
+                    <option value="{{ batch }}">{{ batch }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="course_type">Course Type:</label>
+                <select name="course_type" id="course_type" required>
+                    <option value="">Select Course Type</option>
+                    {% for course_type in course_types %}
+                    <option value="{{ course_type }}">{{ course_type }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="course_name">Course Name:</label>
+                <select name="course_name" id="course_name" required>
+                    <option value="">Select Course Name</option>
+                    {% for record in master_data %}
+                        <option value="{{ record['Course Name'] }}">{{ record['Course Name'] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+           <div class="form-group">
+    <label for="duration_start">Course Duration (Start Date):</label>
+    <input type="date" name="duration_start" id="duration_start" required>
+</div>
+<div class="form-group">
+    <label for="duration_end"> End Date:</label>
+    <input type="date" name="duration_end" id="duration_end" required>
+</div>
+
+            <div class="form-group">
+                <label for="online_offline">Online/Offline:</label>
+                <select name="online_offline" id="online_offline" required>
+                    <option value="Online">Online</option>
+                    <option value="Offline">Offline</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="trainer">Trainer:</label>
+                <select name="trainer" id="trainer" required>
+                    <option value="">Select Trainer</option>
+                    {% for record in master_data %}
+                        <option value="{{ record['Trainer'] }}">{{ record['Trainer'] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Allocate">
+            </div>
+        </form>
+    </div>
+    <script>
+        // Function to update course names based on course type
+        function updateCourseNames() {
+            var selectedCourseType = $('#course_type').val();
+    
+            // Make an AJAX request to fetch course names based on the selected course type
+            $.ajax({
+                type: 'GET',
+                url: '/get_course_names',
+                data: { course_type: selectedCourseType },
+                success: function(response) {
+                    var courseNameDropdown = $('#course_name');
+                    courseNameDropdown.empty();
+                    courseNameDropdown.append('<option value="">Select Course Name</option>');
+    
+                    // Populate the Course Name dropdown with the fetched course names
+                    response.course_names.forEach(function(course) {
+                        courseNameDropdown.append('<option value="' + course + '">' + course + '</option>');
+                    });
+                },
+                error: function() {
+                    console.error('Error fetching course names.');
+                }
+            });
+        }
+    
+        // Attach change event handler to course type select element
+        $('#course_type').on('change', updateCourseNames);
+    
+        // Call the function initially to populate course names
+        updateCourseNames();
+    </script>
+    

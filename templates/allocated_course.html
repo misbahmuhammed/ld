@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Allocated Courses</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Allocated Courses</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Batch</th>
+                <th>Course Type</th>
+                <th>Course Name</th>
+                <th>Course Duration-Start</th>
+                <th>Course Duration-End</th>
+                <th>Online/Offline</th>
+                <th>Trainer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in allocated_courses_data %}
+                <tr>
+                    <td>{{ record['Batch'] }}</td>
+                    <td>{{ record['Course Type'] }}</td>
+                    <td>{{ record['Course Name'] }}</td>
+                    <td>{{ record['Course Duration-Start'] }}</td>
+                    <td>{{ record['Course Duration-End'] }}</td>
+                    <td>{{ record['Online/Offline'] }}</td>
+                    <td>{{ record['Trainer'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/">Go Back</a>
+</body>
+</html>
